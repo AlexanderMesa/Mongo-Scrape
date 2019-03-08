@@ -1,0 +1,8 @@
+<button type="button" id="home">Home</button>
+<button type="button" id="saved-articles">Saved Articles</button>
+<button type="button" id="scrape">Scrape New Articles</button>
+
+{{#each results}}
+<a href="{{this.link}}">{{this.title}}</a>
+<button data-id="{{this.id}}" class="save">Save</button>
+{{/each}}
