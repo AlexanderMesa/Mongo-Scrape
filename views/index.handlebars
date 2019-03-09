@@ -4,5 +4,14 @@
 
 {{#each results}}
 <a href="{{this.link}}">{{this.title}}</a>
-<button data-id="{{this.id}}" class="save">Save</button>
+<button class="save" data-id="{{this.id}}">Save</button>
+{{/each}}
+
+<h1>Saved Articles:</h1>
+{{#each results}}
+{{#if saved}}
+<a href="{{this.link}}">{{this.title}}</a>
+<button class="notes" data-id="{{this.id}}">Add Notes</button>
+<button class="delete" data-id="{{this.id}}">Delete</button>
+{{/if}}
 {{/each}}
