@@ -26,12 +26,17 @@ var ArticleSchema = new Schema({
     type: Boolean,
     required: true
   },
-  // `note` is an object that stores a Note id
+  // `notes` is an array that stores the notes
   // The ref property links the ObjectId to the Note model
-  // This allows us to populate the Article with an associated Note
-  note: {
-    type: Schema.Types.ObjectId,
+  notes: {
+    type: Array,
     ref: "Note"
+  },
+  //'viewComments' is required and of type Boolean
+  //It allows the user to view comments for each article
+  viewComments: {
+    type: Boolean,
+    required: true
   }
 });
 

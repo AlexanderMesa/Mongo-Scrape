@@ -61,11 +61,14 @@ app.get("/scrape", function(req, res) {
             .parent()
             .text()
             .replace(/\n/g, "");
+          var notes = [];
           results.push({
             title: title,
             link: link,
             summary: summary,
-            saved: false
+            saved: false,
+            notes: notes,
+            viewComments: false
           });
 
           db.Article.create(results)
@@ -105,9 +108,8 @@ app.get("/articles/:id", function(req, res) {
     });
 });
 
+//Save the article
 app.put("/articles/saved/:id", function(req, res) {
-  console.log("Saving Article");
-  console.log(mongoose.Types.ObjectId(req.params.id));
   db.Article.findOneAndUpdate(
     { _id: mongoose.Types.ObjectId(req.params.id) },
     { $set: { saved: true } }
@@ -116,26 +118,57 @@ app.put("/articles/saved/:id", function(req, res) {
   });
 });
 
-app.post("/articles/note/:id", function(req, res) {
-  db.Note.create(req.body)
-    .then(function(dbNote) {
-      // If a Note was created successfully, find one Article with an `_id` equal to `req.params.id`. Update the Article to be associated with the new Note
-      // { new: true } tells the query that we want it to return the updated User -- it returns the original by default
-      // Since our mongoose query returns a promise, we can chain another `.then` which receives the result of the query
-      return db.Article.findOneAndUpdate(
-        { _id: mongoose.Types.ObjectId(req.params.id) },
-        { note: dbNote._id },
-        { new: true }
-      );
-    })
-    .then(function(dbArticle) {
-      // If we were able to successfully update an Article, send it back to the client
-      res.json(dbArticle);
-    })
-    .catch(function(err) {
-      // If an error occurred, send it to the client
-      res.json(err);
-    });
+//Delete the article from your saved articles
+app.put("/articles/delete/:id", function(req, res) {
+  db.Article.findOneAndUpdate(
+    { _id: mongoose.Types.ObjectId(req.params.id) },
+    { $set: { saved: false } }
+  ).then(function(err) {
+    console.log(err);
+  });
+});
+
+//Shows article notes based on "Add Note" button
+app.put("/articles/notes/:id", function(req, res) {
+  db.Article.findOneAndUpdate(
+    { _id: mongoose.Types.ObjectId(req.params.id) },
+    { $set: { viewComments: true } }
+  ).then(function(err) {
+    // If we were able to successfully update an Article, send it back to the client
+    console.log(err);
+  });
+});
+
+//Hides article notes based on the "Hide" button
+app.put("/articles/hidenotes/:id", function(req, res) {
+  db.Article.findOneAndUpdate(
+    { _id: mongoose.Types.ObjectId(req.params.id) },
+    { $set: { viewComments: false } }
+  ).then(function(err) {
+    // If we were able to successfully update an Article, send it back to the client
+    console.log(err);
+  });
+});
+
+//Creates a new note
+app.get("/articles/notes/:id/:note", function(req, res) {
+  db.Article.findOneAndUpdate(
+    { _id: mongoose.Types.ObjectId(req.params.id) },
+    { $push: { notes: req.params.note } }
+  ).then(function(err) {
+    // If we were able to successfully update an Article, send it back to the client
+    console.log(err);
+  });
+});
+
+//deletes the notes
+app.get("/articles/deletenotes/:id", function(req, res) {
+  db.Article.findOneAndUpdate(
+    { _id: mongoose.Types.ObjectId(req.params.id) },
+    { $set: { notes: [] } }
+  ).then(function(err) {
+    console.log(err);
+  });
 });
 
 // Start the server
