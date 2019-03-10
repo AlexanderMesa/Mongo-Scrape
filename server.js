@@ -31,7 +31,11 @@ var PORT = 3000;
 app.use(logger("dev"));
 
 // Connect to the Mongo DB
-mongoose.connect("mongodb://localhost/News", {
+var MONGODB_URI =
+  process.env.MONGODB_URI ||
+  "mongodb://localhost/News" ||
+  "mongolab-trapezoidal-11407";
+mongoose.connect(MONGODB_URI, {
   useNewUrlParser: true
 });
 
