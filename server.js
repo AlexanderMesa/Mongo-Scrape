@@ -35,9 +35,9 @@ var MONGODB_URI =
   process.env.MONGODB_URI ||
   "mongodb://localhost/News" ||
   "mongolab-trapezoidal-11407";
-mongoose.connect(MONGODB_URI, {
+mongoose.connect(MONGODB_URI); /*, {
   useNewUrlParser: true
-});
+});*/
 
 app.get("/", function(req, res) {
   db.Article.find().then(function(dbArticle) {
