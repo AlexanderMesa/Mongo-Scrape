@@ -32,9 +32,8 @@ app.use(logger("dev"));
 
 // Connect to the Mongo DB
 var MONGODB_URI =
-  process.env.MONGODB_URI ||
-  "mongodb://localhost/News" ||
-  "mongolab-trapezoidal-11407";
+  /*process.env.MONGODB_URI ||*/
+  "mongodb://localhost/News" || "mongolab-trapezoidal-11407";
 mongoose.connect(MONGODB_URI); /*, {
   useNewUrlParser: true
 });*/
