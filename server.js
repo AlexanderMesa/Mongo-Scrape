@@ -25,7 +25,7 @@ app.set("view engine", "handlebars");
 //Models folder
 var db = require("./models");
 
-var PORT = 3000;
+var PORT = process.env.PORT || 3000;
 
 // Use morgan logger for logging requests
 app.use(logger("dev"));
