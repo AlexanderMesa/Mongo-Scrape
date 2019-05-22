@@ -48,50 +48,69 @@ app.get("/", function(req, res) {
 //Make axios request to News & Observer
 app.get("/scrape", function(req, res) {
   db.Article.deleteMany({}).then(function() {
-    axios
-      .get("https://www.newsobserver.com/latest-news/")
-      .then(function(response) {
-        var $ = cheerio.load(response.data);
-        var results = [];
+    axios.get("https://www.nytimes.com/").then(function(response) {
+      // console.log(response);
 
-        $("h4.title").each(function(i, element) {
-          var title = $(element)
+      var $ = cheerio.load(response.data);
+      var results = [];
+
+      $("div.css-6p6lnl").each(function(i, element) {
+        var title =
+          $(element)
+            .find("span")
+            .text()
+            .replace(/\n/g, "") ||
+          $(element)
+            .find("h2")
             .text()
             .replace(/\n/g, "");
-          var link = $(element)
-            .children()
-            .attr("href");
-          var summary = $(element)
-            .parent()
+        var link = $(element)
+          .find("a")
+          .attr("href");
+        var summary =
+          $(element)
+            .find("li")
+            .text()
+            .replace(/\n/g, "")
+            .replace(".", ". ") ||
+          $(element)
+            .find("p")
             .text()
             .replace(/\n/g, "");
-          var notes = [];
-          results.push({
-            title: title,
-            link: link,
-            summary: summary,
-            saved: false,
-            notes: notes,
-            viewComments: false
-          });
 
-          db.Article.create(results)
-            .then(function(dbArticle) {
-              // View the added result in the console
-              console.log(dbArticle.saved);
-              console.log(dbArticle);
-              res.end();
-            })
-            .catch(function(err) {
-              // If an error occurred, log it
-              console.log(err);
-            });
-        });
+        var object = {
+          title: title,
+          link: "https://www.nytimes.com" + link,
+          summary: summary,
+          saved: false,
+          notes: notes,
+          viewComments: false
+        };
+        //console.log(summary);
+        var notes = [];
+        if (!results.includes(object.title)) {
+          results.push(object);
+        }
       });
+
+      console.log("Here are the results: ");
+      console.log(results);
+      db.Article.create(results)
+        .then(function(dbArticle) {
+          // View the added result in the console
+          console.log(dbArticle.saved);
+          console.log(dbArticle);
+          res.end();
+        })
+        .catch(function(err) {
+          // If an error occurred, log it
+          console.log(err);
+        });
+    });
+
     //res.send("Scrape Complete");
   });
 });
-
 app.get("/articles", function(req, res) {
   db.Article.find({})
     .then(function(dbArticle) {

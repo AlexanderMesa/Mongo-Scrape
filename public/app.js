@@ -7,7 +7,6 @@ $("#home").on("click", function() {
 //Scrapes the articles from News & Observer
 $("#scrape").on("click", function() {
   $.get("/scrape", function() {
-    event.preventDefault();
     window.location.href = "/";
   });
 });

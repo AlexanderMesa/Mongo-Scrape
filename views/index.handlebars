@@ -1,34 +1,35 @@
-<h1 style="text-align: center;">Mongo Scrapper</h1>
-<button type="button" id="scrape">Scrape New Articles</button>
+<div>
+    <h1 style="text-align: center;">New York Times Mongo Scrapper</h1>
+    <button type="button" id="scrape">Scrape New Articles</button>
 
-<!--Display Notes For Articles -->
-<h1>Article Comments</h1>
-{{#each results}}
-{{#if viewComments}}
-<div class="article-name" data-id="{{this.id}}">{{this.title}}</div><br>
-<b>Notes (refresh page to see your note):</b>
-<div class="all-notes" id="notes_{{this.id}}">{{this.notes}}</div>
-<input type="text" class="comment" id="comment_{{this.id}}"></br>
-<button type="button" class="submit-note" data-id="{{this.id}}">Submit</button>
-<button type="button" class="delete-notes" data-id="{{this.id}}">Delete Notes</button>
-<button type="button" class="hide-notes" data-id="{{this.id}}">Hide Notes</button></br>
-{{/if}}
-{{/each}}
+    <!--Display Notes For Articles -->
+    <h1>Article Comments</h1>
+    {{#each results}}
+    {{#if viewComments}}
+    <div class="article-name" data-id="{{this.id}}">{{this.title}}</div><br>
+    <b>Notes (refresh page to see your note):</b>
+    <div class="all-notes" id="notes_{{this.id}}">{{this.notes}}</div>
+    <input type="text" class="comment" id="comment_{{this.id}}"></br>
+    <button type="button" class="submit-note" data-id="{{this.id}}">Submit</button>
+    <button type="button" class="delete-notes" data-id="{{this.id}}">Delete Notes</button>
+    <button type="button" class="hide-notes" data-id="{{this.id}}">Hide Notes</button></br>
+    {{/if}}
+    {{/each}}
 
-<!--All Articles-->
-<h1>All Articles</h1>
-{{#each results}}
-<a href="{{this.link}}">{{this.title}}</a><br>
-<div>{{this.summary}}</div>
-<button class="save" data-id="{{this.id}}">Save</button><br><br>
-{{/each}}
+    <!--All Articles-->
+    <h1>All Articles</h1>
+    {{#each results}}
+    <a href="{{this.link}}">{{this.title}}</a><br>
+    <div>{{this.summary}}</div>
+    <button class="save" data-id="{{this.id}}">Save</button><br><br>
+    {{/each}}
 
-<h1>Saved Articles:</h1>
-{{#each results}}
-{{#if saved}}
-<a href="{{this.link}}">{{this.title}}</a>
-<button class="notes" data-id="{{this.id}}" title="{{this.title}}">Add Notes</button>
-<button class="delete" data-id="{{this.id}}">Delete</button><br>
-{{/if}}
-{{/each}}
-</body>
+    <h1>Saved Articles:</h1>
+    {{#each results}}
+    {{#if saved}}
+    <a href="{{this.link}}">{{this.title}}</a>
+    <button class="notes" data-id="{{this.id}}" title="{{this.title}}">Add Notes</button>
+    <button class="delete" data-id="{{this.id}}">Delete</button><br>
+    {{/if}}
+    {{/each}}
+</div>
