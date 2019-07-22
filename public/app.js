@@ -4,7 +4,7 @@ $("#home").on("click", function() {
   $.get("/");
 });
 
-//Scrapes the articles from News & Observer
+//Scrapes the articles from New York Times
 $("#scrape").on("click", function() {
   $.get("/scrape", function() {
     window.location.href = "/";

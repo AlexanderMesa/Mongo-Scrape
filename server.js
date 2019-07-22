@@ -45,7 +45,7 @@ app.get("/", function(req, res) {
   });
 });
 
-//Make axios request to News & Observer
+//Make axios request to New York Times
 app.get("/scrape", function(req, res) {
   db.Article.deleteMany({}).then(function() {
     axios.get("https://www.nytimes.com/").then(function(response) {
