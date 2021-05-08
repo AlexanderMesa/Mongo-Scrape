@@ -23,7 +23,7 @@
     "cheerio": "^1.0.0-rc.2",
     "express": "^4.16.4",
     "express-handlebars": "^3.0.2",
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.21",
     "lodash.chunk": "^4.2.0",
     "lodash.uniqby": "^4.7.0",
     "mongoose": "^5.4.17",
